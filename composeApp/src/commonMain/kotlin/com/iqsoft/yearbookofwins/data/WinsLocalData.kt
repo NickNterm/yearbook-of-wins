@@ -1,6 +1,7 @@
 package com.iqsoft.yearbookofwins.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 
@@ -30,11 +31,23 @@ class WinsLocalDataImpl(
         return win;
     }
 
-    override fun getWinById(objectId: Int): Flow<WinObject?> =
-        db.getDao().getSingleWin(objectId).map { it -> it?.toWinObject() }
+    override fun getWinById(objectId: Int): Flow<WinObject?> {
+        return db.getDao().getSingleWin(objectId).map { it ->
+            if (it.isNotEmpty()) {
+                it[0].toWinObject()
+            } else {
+                null
+            }
+        }
+    }
 
-    override fun getWins(): Flow<List<WinObject>> =
-        db.getDao().getAllWins().map { list -> list.map { entity -> entity.toWinObject() } }
+    override fun getWins(): Flow<List<WinObject>> {
+        return db.getDao().getAllWins().map { list ->
+            list.map { entity ->
+                entity.toWinObject()
+            }
+        }
+    }
 
     override fun removeWin(winId: Int) {
         db.getDao().deleteWin(winId)

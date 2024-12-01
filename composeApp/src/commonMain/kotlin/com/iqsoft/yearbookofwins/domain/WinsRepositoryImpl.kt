@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class WinsRepositoryImpl(
     private val localData: WinsLocalData,
 ) : WinsRepository {
-    override suspend fun getWins(): Flow<List<WinObject>> {
+    override fun getWins(): Flow<List<WinObject>> {
         return localData.getWins()
     }
 

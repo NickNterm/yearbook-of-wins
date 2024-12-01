@@ -36,7 +36,7 @@ interface WinDao {
     fun getAllWins(): Flow<List<WinEntity>>
 
     @Query("SELECT * FROM WinEntity WHERE id = :id")
-    fun getSingleWin(id: Int): Flow<WinEntity?>
+    fun getSingleWin(id: Int): Flow<List<WinEntity>>
 
     @Query("DELETE FROM WinEntity WHERE id = :id")
     fun deleteWin(id: Int)
